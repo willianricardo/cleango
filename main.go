@@ -2,14 +2,17 @@ package main
 
 import (
 	"api/database"
+	_ "api/docs"
 	"api/handler"
 	"api/repository"
 	"api/routes"
+
 	"log"
 
 	"github.com/gofiber/fiber/v2"
 	"github.com/gofiber/fiber/v2/middleware/cors"
 	"github.com/gofiber/fiber/v2/middleware/logger"
+	fiberSwagger "github.com/swaggo/fiber-swagger"
 )
 
 func main() {
@@ -51,6 +54,9 @@ func main() {
 	routes.SetupProductRoutes(app, productHandler)
 	routes.SetupCustomerRoutes(app, customerHandler)
 	routes.SetupOrderRoutes(app, orderHandler)
+
+	// Swagger docs route
+	app.Get("/swagger/*", fiberSwagger.WrapHandler)
 
 	// Start the HTTP server
 	log.Fatal(app.Listen(":8080"))
