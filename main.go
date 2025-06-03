@@ -2,12 +2,12 @@ package main
 
 import (
 	"api/database"
-	_ "api/docs"
 	"api/handler"
 	"api/repository"
 	"api/routes"
-
 	"log"
+
+	_ "api/docs"
 
 	"github.com/gofiber/fiber/v2"
 	"github.com/gofiber/fiber/v2/middleware/cors"
@@ -17,7 +17,7 @@ import (
 
 func main() {
 	// Initialize the database
-	db, err := database.InitializeDB()
+	db, err := database.InitializeDB("database/database.db", "file://database/migrations")
 	if err != nil {
 		log.Fatal(err)
 	}

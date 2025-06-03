@@ -9,14 +9,20 @@ import (
 	_ "github.com/mattn/go-sqlite3"
 )
 
-func InitializeDB() (*sql.DB, error) {
-	db, err := sql.Open("sqlite3", "database/database.db")
+func InitializeDB(dbFile string, migrationDir string) (*sql.DB, error) {
+	db, err := sql.Open("sqlite3", dbFile)
 	if err != nil {
 		return nil, err
 	}
 
-	// Run the migrations
-	m, err := migrate.New("file://database/migrations", "sqlite3://database/database.db")
+	if migrationDir == "" {
+		migrationDir = "file://database/migrations"
+	}
+
+	m, err := migrate.New(
+		migrationDir,
+		"sqlite3://"+dbFile,
+	)
 	if err != nil {
 		return nil, err
 	}

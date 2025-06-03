@@ -34,7 +34,6 @@ func (repository *CustomerRepository) GetCustomers() ([]model.Customer, error) {
 	}
 
 	return customers, nil
-
 }
 
 func (repository *CustomerRepository) GetCustomerByID(id string) (model.Customer, error) {
